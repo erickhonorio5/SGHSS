@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    container_name: db
+    hostname: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: SGHSS
+    networks:
+      - rct-network
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - './pg_db:/var/lib/postgresql'
+      - './pg_data:/var/lib/postgresql/data'
+
+networks:
+  rct-network:
+    driver: bridge
