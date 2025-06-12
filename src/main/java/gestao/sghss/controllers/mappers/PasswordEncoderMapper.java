@@ -1,20 +1,14 @@
 package gestao.sghss.controllers.mappers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import gestao.sghss.annotations.EncodedMapping;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PasswordEncoderMapper {
+public record PasswordEncoderMapper(PasswordEncoder passwordEncoder) {
 
-    private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public PasswordEncoderMapper(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    public String encode(String rawPassword) {
-        return passwordEncoder.encode(rawPassword);
+    @EncodedMapping
+    public String encode(String password) {
+        return passwordEncoder.encode(password);
     }
 }

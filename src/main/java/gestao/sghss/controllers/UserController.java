@@ -6,6 +6,8 @@ import gestao.sghss.controllers.dtos.responses.UserResponseDTO;
 import gestao.sghss.controllers.mappers.UserControllerMapper;
 import gestao.sghss.usecases.UserUseCase.CreateUser;
 import gestao.sghss.usecases.UserUseCase.FindUser;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import static org.springframework.http.ResponseEntity.badRequest;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@Tag(name = "Profile Controller")
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserController {

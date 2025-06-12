@@ -2,6 +2,7 @@ package gestao.sghss.security.services;
 
 import gestao.sghss.domain.User;
 import gestao.sghss.security.jwt.TokenUtils;
+import gestao.sghss.usecases.UserUseCase.FindUser;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
@@ -16,11 +17,15 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final TokenUtils tokenUtils;
+    private final FindUser findUser;
 
     public ResponseCookie authenticate(String username, String password) {
         var authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
+
+        final var user = findUser.byUsernameOrEmail(username);
+        user.setLastAccess();
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

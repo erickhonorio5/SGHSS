@@ -1,8 +1,6 @@
 package gestao.sghss.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,7 +9,10 @@ import static java.time.LocalDateTime.now;
 
 @Getter
 @Setter
+@ToString
 @EqualsAndHashCode
+@AllArgsConstructor
+@Builder
 public class User implements Serializable {
 
     private Long id;
@@ -31,10 +32,6 @@ public class User implements Serializable {
     private String lastLogin;
 
     public User() {
-        LocalDateTime now = LocalDateTime.now();
-        this.createdAt = now;
-        this.updatedAt = now;
-        this.lastAccess = now;
         this.isAccountVerified = false;
     }
 
@@ -42,6 +39,10 @@ public class User implements Serializable {
         if (lastAccess == null) {
             this.lastAccess = now();
         }
+    }
+
+    public void updateLastAccess() {
+        this.lastAccess = LocalDateTime.now();
     }
 
     public String getLastLogin() {
