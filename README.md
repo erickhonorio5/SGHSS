@@ -78,6 +78,15 @@ Este projeto tem como objetivo ser **escalável**, **modular**, e **fácil de ma
 
 ### 2. Clone o projeto
 
-```bash
-git clone https://github.com/seu-usuario/sghss.git
-cd sghss
+- git clone https://github.com/seu-usuario/sghss.git
+- cd sghss
+
+### 3. Suba com Docker
+
+- docker-compose up -d
+  
+### 4. Rode localmente
+
+### 5. Acesse
+
+- Swagger UI: http://localhost:8080/swagger-ui.html
