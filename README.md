@@ -73,9 +73,8 @@ Este projeto tem como objetivo ser **escalável**, **modular**, e **fácil de ma
 
 ### 1. Pré-requisitos
 
-- Java 17
-- Docker e Docker Compose (opcional, mas recomendado)
-- PostgreSQL (caso não utilize Docker)
+- Java 21
+- Docker
 
 ### 2. Clone o projeto
 
