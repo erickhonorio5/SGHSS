@@ -1,4 +1,4 @@
-# SGHSS - Sistema de Gestão Hospitalar de Saúde Simplificada 🏥
+# SGHSS - Sistema de Gestão Hospitalar de Saúde 🏥
 
 ![Java](https://img.shields.io/badge/Java-17+-red?logo=java)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-green?logo=springboot)
@@ -16,30 +16,8 @@ Este projeto tem como objetivo ser **escalável**, **modular**, e **fácil de ma
 
 ---
 
-## 🧱 Arquitetura
+## 🧱 Arquitetura (Em breve)
 
-A arquitetura segue os princípios de **Clean Architecture**:
-
-├── domain
-│ └── entidades de negócio (Patient, Address, Insurance, etc.)
-│
-├── usecases
-│ └── lógica de aplicação e orquestração (CreatePatient, PatchPatient, etc.)
-│
-├── gateways
-│ └── interfaces e implementações de acesso a dados
-│
-├── controllers
-│ └── endpoints REST, mapeamento de entrada e saída
-│
-├── dtos
-│ └── Request/Response (ex: PatientRequestDTO, PatientResponseDTO, PatientPatchRequestDTO)
-│
-├── mappers
-│ └── Conversão entre DTOs e entidades de domínio
-│
-├── exceptions
-│ └── Exceptions de domínio e handler global com mensagens claras
 
 ****
 
