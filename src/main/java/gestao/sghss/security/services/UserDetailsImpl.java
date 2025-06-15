@@ -7,43 +7,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
-public class UserDetailsImpl implements UserDetails {
+public record UserDetailsImpl(
+        Long id,
+        String username,
+        String email,
+        String fullName,
+        @JsonIgnore
+        String password,
+        boolean isAccountVerified,
+        Collection<? extends GrantedAuthority> authorities
+) implements UserDetails {
+
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final Long id;
-    private final String username;
-    private final String email;
-    private final String fullName;
-    private final String password;
-    private final boolean isAccountVerified;
-    private final Collection<? extends GrantedAuthority> authorities;
-
-    public UserDetailsImpl(Long id, String username, String email, 
-                         String fullName, String password, 
-                         boolean isAccountVerified,
-                         Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.fullName = fullName;
-        this.password = password;
-        this.isAccountVerified = isAccountVerified;
-        this.authorities = authorities;
+    public static UserDetailsImpl build(final User user, final List<GrantedAuthority> authorityList) {
+        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(),user.getFullName(), user.getPasswordHash(), user.isAccountVerified(), authorityList);
     }
 
-    public static UserDetailsImpl build(User user, Collection<? extends GrantedAuthority> authorities) {
-        return new UserDetailsImpl(
-            user.getId(),
-            user.getUsername(),
-            user.getEmail(),
-            user.getFullName(),
-            user.getPasswordHash(),
-            user.isAccountVerified(),
-            authorities
-        );
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 
     public Long getId() {
@@ -54,16 +41,6 @@ public class UserDetailsImpl implements UserDetails {
         return email;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @JsonIgnore
     @Override
     public String getPassword() {
         return password;
@@ -72,6 +49,10 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     @Override

@@ -23,8 +23,9 @@ public final class SecurityConstants {
     public static final String SWAGGER_RESOURCES     = "/swagger-resources/**";
     public static final String WEBJARS               = "/webjars/**";
 
-    // ─── Static / Browser Assets ─────────────────────────────────
+    // ─── ETC ─────────────────────────────────
     public static final String FAVICON = "/favicon.ico";
+    public static final String ERROR_PATH = "/error";
 
     // ─── Roles & Authorities ──────────────────────────────────────
     public static final String ROLE_USER  = "ROLE_USER";
@@ -46,6 +47,8 @@ public final class SecurityConstants {
             SWAGGER_RESOURCES,
             WEBJARS,
             // Ícone do site
-            FAVICON
+            FAVICON,
+            // Endpoint de erro
+            ERROR_PATH
     };
 }

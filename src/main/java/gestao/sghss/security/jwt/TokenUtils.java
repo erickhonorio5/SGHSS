@@ -32,7 +32,7 @@ public class TokenUtils {
     private static final String PATH = "/";
     private static final String PROD_DOMAIN = ".rctsystem.com";
     private static final int COOKIE_MAX_AGE = 216_000;
-    
+
     private final Environment environment;
 
     @Value("${api.app.jwtSecret}")
@@ -71,7 +71,7 @@ public class TokenUtils {
                 .getPayload();
     }
 
-    private String generateTokenFromUser(String id, String username, String name, String email, 
+    private String generateTokenFromUser(String id, String username, String name, String email,
                                        Collection<? extends GrantedAuthority> authorities) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", id);
@@ -85,6 +85,7 @@ public class TokenUtils {
     }
 
     public ResponseCookie generateToken(UserDetailsImpl userDetails) {
+        log.debug("Gerando token para usuário: {}", userDetails.getUsername());
         String jwt = generateTokenFromUser(
             userDetails.getId().toString(),
             userDetails.getUsername(),
@@ -96,6 +97,7 @@ public class TokenUtils {
     }
 
     public ResponseCookie generateToken(User user) {
+        log.debug("Gerando token para usuário (via entidade): {}", user.getUsername());
         String jwt = generateTokenFromUser(
             user.getId().toString(),
             user.getUsername(),

@@ -11,7 +11,7 @@ import lombok.*;
 @Embeddable
 public class AddressEmbeddable {
 
-    @Column(name = "zip_code", length = 8)
+    @Column(name = "zip_code", length = 9)
     private String zipCode;
 
     @Column(name = "street", length = 255)

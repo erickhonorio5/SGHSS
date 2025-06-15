@@ -5,12 +5,14 @@ import gestao.sghss.security.jwt.TokenUtils;
 import gestao.sghss.usecases.UserUseCase.FindUser;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -20,6 +22,7 @@ public class AuthService {
     private final FindUser findUser;
 
     public ResponseCookie authenticate(String username, String password) {
+        log.info("Tentando autenticar usuário: {}", username);
         var authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
@@ -27,18 +30,12 @@ public class AuthService {
         final var user = findUser.byUsernameOrEmail(username);
         user.setLastAccess();
 
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        return tokenUtils.generateToken(userDetails);
-    }
+        log.info("Usuário autenticado com sucesso: {}", userDetails.getUsername());
 
-    public ResponseCookie generateToken(UserDetailsImpl userDetails) {
         return tokenUtils.generateToken(userDetails);
-    }
-
-    public ResponseCookie generateToken(User user) {
-        return tokenUtils.generateToken(user);
     }
 
     public String getUsernameFromRequest(HttpServletRequest request) {

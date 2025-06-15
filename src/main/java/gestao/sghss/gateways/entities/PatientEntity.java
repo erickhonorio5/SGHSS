@@ -31,7 +31,7 @@ public class PatientEntity {
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @Column(length = 15)
+    @Column(length = 11)
     private String phone;
 
     @Column(length = 255)
