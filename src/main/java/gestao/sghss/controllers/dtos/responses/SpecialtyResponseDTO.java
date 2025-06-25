@@ -1,8 +1,14 @@
 package gestao.sghss.controllers.dtos.responses;
 
-public record SpecialtyResponseDTO(
-        Long id,
-        String name,
-        String description,
-        Long consultationDurationMinutes
-) {}
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class SpecialtyResponseDTO {
+
+    private Long id;
+    private String name;
+    private String description;
+    private Long consultationDurationMinutes;
+}

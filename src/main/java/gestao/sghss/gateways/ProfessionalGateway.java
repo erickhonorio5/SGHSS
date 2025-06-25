@@ -2,6 +2,7 @@ package gestao.sghss.gateways;
 
 import gestao.sghss.domain.Professional;
 import gestao.sghss.exceptions.EntityNotFoundException;
+import gestao.sghss.gateways.entities.ProfessionalEntity;
 import gestao.sghss.gateways.mapper.ProfessionalMapper;
 import gestao.sghss.repositories.ProfessionalRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,16 @@ public class ProfessionalGateway {
     private final ProfessionalRepository repository;
     private final ProfessionalMapper mapper;
 
-    public Professional save(final Professional professional) {
-        return mapper.toDomain(repository.save(mapper.toEntity(professional)));
+    public Professional save(Professional professional) {
+        var entity = mapper.toEntity(professional);
+
+        if (entity.getSpecialties() != null) {
+            entity.getSpecialties()
+                    .forEach(ps -> ps.setProfessional(entity));
+        }
+
+        var savedEntity = repository.save(entity);
+        return mapper.toDomain(savedEntity);
     }
 
     public Professional findById(final Long id) {

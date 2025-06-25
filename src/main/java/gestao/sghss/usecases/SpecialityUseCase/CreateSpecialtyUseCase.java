@@ -16,10 +16,17 @@ public class CreateSpecialtyUseCase {
     public Specialty execute(Specialty specialty) {
         log.info("Criando especialidade: {}", specialty.getName());
         validate(specialty);
-        return specialtyGateway.save(specialty);
+        Specialty saved = specialtyGateway.save(specialty);
+        log.info("Especialidade criada com sucesso. Duration: {}", saved.getConsultationDuration());
+        return saved;
     }
 
     private void validate(Specialty specialty) {
-        if (specialty.getName() == null || specialty.getName().isBlank()) throw new IllegalArgumentException("Nome da especialidade é obrigatório.");
+        if (specialty.getName() == null || specialty.getName().isBlank()) {
+            throw new IllegalArgumentException("Nome da especialidade é obrigatório.");
+        }
+        if (specialty.getConsultationDuration() == null || specialty.getConsultationDuration() <= 0) {
+            throw new IllegalArgumentException("Duração da consulta deve ser maior que zero.");
+        }
     }
 }

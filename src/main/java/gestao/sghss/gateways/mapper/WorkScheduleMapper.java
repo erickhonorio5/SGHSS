@@ -8,10 +8,11 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface WorkScheduleMapper {
 
-    @Mapping(target = "professional", ignore = true)
+    @Mapping(target = "professional.id", source = "professionalId") // 💡 direto!
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     WorkScheduleEntity toEntity(WorkSchedule domain);
 
+    @Mapping(target = "professionalId", source = "professional.id")
     WorkSchedule toDomain(WorkScheduleEntity entity);
 }

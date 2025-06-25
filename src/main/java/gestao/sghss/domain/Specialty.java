@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.Duration;
-
 @Getter
 @Setter
 @ToString
@@ -21,13 +19,5 @@ public class Specialty {
     private Long id;
     private String name;
     private String description;
-    private Duration consultationDuration;
-
-    public long getConsultationDurationMinutes() {
-        return consultationDuration != null ? consultationDuration.toMinutes() : 0;
-    }
-
-    public void setConsultationDurationMinutes(long minutes) {
-        this.consultationDuration = Duration.ofMinutes(minutes);
-    }
+    private Long consultationDuration;
 }

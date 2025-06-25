@@ -6,23 +6,13 @@ import gestao.sghss.domain.Specialty;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.time.Duration;
-
 @Mapper(componentModel = "spring")
 public interface SpecialtyControllerMapper {
 
-    @Mapping(target = "consultationDuration", expression = "java(toDuration(request.consultationDurationMinutes()))")
+    @Mapping(target = "consultationDuration", source = "consultationDurationMinutes")
     Specialty toDomain(CreateSpecialtyRequestDTO request);
 
-    @Mapping(target = "consultationDurationMinutes", expression = "java(fromDuration(specialty.getConsultationDuration()))")
+    @Mapping(target = "consultationDurationMinutes", source = "consultationDuration")
     SpecialtyResponseDTO toResponse(Specialty specialty);
-
-    default Duration toDuration(Long minutes) {
-        return minutes != null ? Duration.ofMinutes(minutes) : null;
-    }
-
-    default Long fromDuration(Duration duration) {
-        return duration != null ? duration.toMinutes() : null;
-    }
 }
 

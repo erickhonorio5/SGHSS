@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
@@ -34,7 +33,7 @@ import static org.springframework.http.HttpStatus.OK;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/v1/speciality")
 @SecurityRequirement(name = "bearerAuth")
-@Tag(name = "Speciality", description = "Operações de gestão de especialidade de saúde")
+@Tag(name = "Speciality Controller", description = "Operações de gestão de especialidade de saúde")
 public class SpecialityController {
 
     private final CreateSpecialtyUseCase createSpecialtyUseCase;

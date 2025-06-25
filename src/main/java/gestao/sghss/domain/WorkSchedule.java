@@ -21,6 +21,7 @@ import java.time.LocalTime;
 @Builder
 public class WorkSchedule {
     private Long id;
+    private Long professionalId;
     private DayOfWeek dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;

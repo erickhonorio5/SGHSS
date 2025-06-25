@@ -5,8 +5,6 @@ import gestao.sghss.gateways.entities.SpecialtyEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.time.Duration;
-
 @Mapper(componentModel = "spring")
 public interface SpecialtyMapper {
 
@@ -17,14 +15,6 @@ public interface SpecialtyMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     SpecialtyEntity toEntity(Specialty domain);
-
-    default Duration mapToDuration(Long minutes) {
-        return minutes != null ? Duration.ofMinutes(minutes) : null;
-    }
-
-    default Long mapToMinutes(Duration duration) {
-        return duration != null ? duration.toMinutes() : null;
-    }
 }
 
 

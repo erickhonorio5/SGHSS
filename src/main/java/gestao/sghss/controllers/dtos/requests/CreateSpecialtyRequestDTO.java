@@ -1,7 +1,13 @@
 package gestao.sghss.controllers.dtos.requests;
 
-public record CreateSpecialtyRequestDTO (
-        String name,
-        String description,
-        Long consultationDurationMinutes
-) {}
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CreateSpecialtyRequestDTO {
+
+    private String name;
+    private String description;
+    private Long consultationDurationMinutes;
+}
