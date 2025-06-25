@@ -122,6 +122,30 @@ public class RestExceptionHandler {
                 .build();
     }
 
+    @ResponseStatus(NOT_FOUND)
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ExceptionFilters handleProfessionalNotFound(final EntityNotFoundException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(NOT_FOUND.value())
+                .title("Profissional não encontrado!")
+                .build();
+    }
+
+    @ResponseStatus(NOT_FOUND)
+    @ExceptionHandler(SpecialtyException.class)
+    public ExceptionFilters handleSpecialityNotFound(final SpecialtyException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(NOT_FOUND.value())
+                .title("Especialidade não encontrada!")
+                .build();
+    }
+
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(InvalidPatientStatusException.class)
     public ExceptionFilters handleInvalidPatientStatus(final InvalidPatientStatusException ex) {

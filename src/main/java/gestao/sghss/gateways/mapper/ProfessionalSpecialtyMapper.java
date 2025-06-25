@@ -8,14 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = { SpecialtyMapper.class })
 public interface ProfessionalSpecialtyMapper {
 
-    SpecialtyMapper specialtyMapper = null; // será injetado automaticamente
-
-    default Specialty toDomain(ProfessionalSpecialtyEntity entity) {
-        if (entity == null || entity.getSpecialty() == null) {
-            return null;
-        }
-        return specialtyMapper.toDomain(entity.getSpecialty());
-    }
+    @Mapping(source = "specialty", target = ".")
+    Specialty toDomain(ProfessionalSpecialtyEntity entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "professional", ignore = true)

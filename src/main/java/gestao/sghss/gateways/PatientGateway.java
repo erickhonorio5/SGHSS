@@ -42,7 +42,6 @@ public class PatientGateway {
         return patientMapper.toDomain(patientRepository.findByCpf(cpf).orElseThrow(PatientNotFoundException::new));
     }
 
-
     public Patient findByEmail(final String email) {
         return patientRepository.findByEmailIgnoreCase(email).map(patientMapper::toDomain).orElseThrow(PatientNotFoundException::new);
     }
