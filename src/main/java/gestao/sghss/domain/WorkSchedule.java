@@ -25,6 +25,8 @@ public class WorkSchedule {
     private DayOfWeek dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
+    private LocalTime lunchStartTime;
+    private LocalTime lunchEndTime;
 
     public boolean containsTime(LocalDateTime dateTime) {
         if (!dateTime.getDayOfWeek().equals(this.dayOfWeek)) {

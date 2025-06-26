@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -20,8 +22,13 @@ public class CreateWorkScheduleUseCase {
 
         professionalGateway.findById(professionalId);
 
-        schedule.setProfessionalId(professionalId);
+        if (workScheduleGateway.existsByProfessionalIdAndDayOfWeek(professionalId, schedule.getDayOfWeek())) {
+            throw new IllegalStateException("Já existe horário definido para esse dia da semana.");
+        }
 
+        validateSchedule(schedule);
+
+        schedule.setProfessionalId(professionalId);
         WorkSchedule created = workScheduleGateway.save(schedule);
 
         log.info("Horário criado com sucesso para {}: {} - {}",
@@ -29,4 +36,34 @@ public class CreateWorkScheduleUseCase {
 
         return created;
     }
+
+    public List<WorkSchedule> createWeek(Long professionalId, List<WorkSchedule> schedules) {
+        log.info("Criando agenda da semana inteira para profissional ID: {}", professionalId);
+
+        professionalGateway.findById(professionalId);
+        schedules.forEach(s -> s.setProfessionalId(professionalId));
+
+        var saved = workScheduleGateway.saveAll(schedules);
+
+        log.info("Agenda semanal salva com {} horários", saved.size());
+        return saved;
+    }
+
+    private void validateSchedule(WorkSchedule schedule) {
+        if (schedule.getStartTime().isAfter(schedule.getEndTime())) {
+            throw new IllegalArgumentException("Hora de início deve ser antes da hora de término.");
+        }
+
+        if (schedule.getLunchStartTime() != null && schedule.getLunchEndTime() != null) {
+            if (schedule.getLunchStartTime().isAfter(schedule.getLunchEndTime())) {
+                throw new IllegalArgumentException("Início do almoço deve ser antes do fim.");
+            }
+
+            if (schedule.getLunchStartTime().isBefore(schedule.getStartTime()) ||
+                    schedule.getLunchEndTime().isAfter(schedule.getEndTime())) {
+                throw new IllegalArgumentException("Almoço deve estar dentro do horário de expediente.");
+            }
+        }
+    }
 }
+

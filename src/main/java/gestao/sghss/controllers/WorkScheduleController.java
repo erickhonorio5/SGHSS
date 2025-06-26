@@ -1,6 +1,7 @@
 package gestao.sghss.controllers;
 
 import gestao.sghss.controllers.dtos.requests.CreateWorkScheduleRequestDTO;
+import gestao.sghss.controllers.dtos.requests.WeeklyWorkScheduleRequestDTO;
 import gestao.sghss.controllers.dtos.responses.WorkScheduleResponseDTO;
 import gestao.sghss.controllers.mappers.WorkScheduleControllerMapper;
 import gestao.sghss.usecases.WorkScheduleUseCase.CreateWorkScheduleUseCase;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +41,8 @@ public class WorkScheduleController {
     private final CreateWorkScheduleUseCase createWorkScheduleUseCase;
     private final ListWorkSchedulesByProfessionalUseCase listWorkSchedulesByProfessionalUseCase;
     private final DeleteWorkScheduleUseCase deleteWorkScheduleUseCase;
+
+    @Qualifier("workScheduleControllerMapper")
     private final WorkScheduleControllerMapper mapper;
 
     @PostMapping
@@ -63,6 +67,15 @@ public class WorkScheduleController {
     @Operation(summary = "Excluir horário de trabalho", description = "Remove um horário de trabalho específico do profissional")
     public void delete(@PathVariable Long professionalId, @PathVariable Long scheduleId) {
         deleteWorkScheduleUseCase.execute(professionalId, scheduleId);
+    }
+
+    @PostMapping("/week")
+    @Operation(summary = "Definir agenda da semana inteira", description = "Define os horários de trabalho para todos os dias da semana de uma vez")
+    @ResponseStatus(CREATED)
+    public List<WorkScheduleResponseDTO> createWeek(@PathVariable Long professionalId, @RequestBody @Valid WeeklyWorkScheduleRequestDTO request) {
+        var schedules = request.schedules().stream().map(mapper::toDomain).toList();
+
+        return createWorkScheduleUseCase.createWeek(professionalId, schedules).stream().map(mapper::toResponse).toList();
     }
 }
 
