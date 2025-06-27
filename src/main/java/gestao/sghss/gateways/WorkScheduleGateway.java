@@ -1,7 +1,6 @@
 package gestao.sghss.gateways;
 
 import gestao.sghss.domain.WorkSchedule;
-import gestao.sghss.exceptions.WorkScheduleException;
 import gestao.sghss.exceptions.WorkScheduleNotFoundException;
 import gestao.sghss.gateways.mapper.WorkScheduleMapper;
 import gestao.sghss.repositories.WorkScheduleRepository;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service

@@ -1,6 +1,5 @@
 package gestao.sghss.usecases.WorkScheduleUseCase;
 
-import gestao.sghss.exceptions.WorkScheduleException;
 import gestao.sghss.exceptions.WorkScheduleOwnershipException;
 import gestao.sghss.gateways.WorkScheduleGateway;
 import lombok.RequiredArgsConstructor;
