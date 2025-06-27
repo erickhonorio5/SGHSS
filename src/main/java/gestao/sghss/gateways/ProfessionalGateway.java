@@ -2,7 +2,6 @@ package gestao.sghss.gateways;
 
 import gestao.sghss.domain.Professional;
 import gestao.sghss.exceptions.EntityNotFoundException;
-import gestao.sghss.gateways.entities.ProfessionalEntity;
 import gestao.sghss.gateways.mapper.ProfessionalMapper;
 import gestao.sghss.repositories.ProfessionalRepository;
 import lombok.RequiredArgsConstructor;

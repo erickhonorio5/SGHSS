@@ -19,7 +19,7 @@ public class ListWorkSchedulesByProfessionalUseCase {
     public List<WorkSchedule> execute(Long professionalId) {
         log.info("Listando horários do profissional ID: {}", professionalId);
         return workScheduleGateway.findByProfessionalId(professionalId).stream()
-                .sorted(Comparator.comparing(ws -> ws.getDayOfWeek().getValue())) // Ordena de 1 (Monday) a 7 (Sunday)
+                .sorted(Comparator.comparing(ws -> ws.getDayOfWeek().getValue()))
                 .toList();
     }
 }

@@ -1,6 +1,7 @@
 package gestao.sghss.usecases.WorkScheduleUseCase;
 
 import gestao.sghss.exceptions.WorkScheduleException;
+import gestao.sghss.exceptions.WorkScheduleOwnershipException;
 import gestao.sghss.gateways.WorkScheduleGateway;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,16 +19,9 @@ public class DeleteWorkScheduleUseCase {
     public void execute(Long professionalId, Long scheduleId) {
         log.info("Tentando excluir horário ID: {} do profissional ID: {}", scheduleId, professionalId);
 
-        var schedule = workScheduleGateway.findById(scheduleId)
-                .orElseThrow(() -> {
-                    log.warn("Horário de trabalho ID {} não encontrado", scheduleId);
-                    return new WorkScheduleException("Horário de trabalho não encontrado");
-                });
+        var schedule = workScheduleGateway.findById(scheduleId);
 
-        if (!Objects.equals(schedule.getProfessionalId(), professionalId)) {
-            log.warn("Horário ID {} não pertence ao profissional ID {}", scheduleId, professionalId);
-            throw new WorkScheduleException("O horário não pertence ao profissional informado");
-        }
+        if (!Objects.equals(schedule.getProfessionalId(), professionalId)) throw new WorkScheduleOwnershipException();
 
         workScheduleGateway.deleteById(scheduleId);
         log.info("Horário de trabalho ID {} removido com sucesso", scheduleId);

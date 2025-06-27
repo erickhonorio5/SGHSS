@@ -1,6 +1,8 @@
 package gestao.sghss.gateways;
 
 import gestao.sghss.domain.WorkSchedule;
+import gestao.sghss.exceptions.WorkScheduleException;
+import gestao.sghss.exceptions.WorkScheduleNotFoundException;
 import gestao.sghss.gateways.mapper.WorkScheduleMapper;
 import gestao.sghss.repositories.WorkScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +40,8 @@ public class WorkScheduleGateway {
                 .toList();
     }
 
-    public Optional<WorkSchedule> findById (final Long id){
-        return repository.findById(id).map(mapper::toDomain);
+    public WorkSchedule findById (final Long id){
+        return repository.findById(id).map(mapper::toDomain).orElseThrow(() -> new WorkScheduleNotFoundException(id));
     }
 
     public List<WorkSchedule> findByProfessionalId(final Long professionalId){

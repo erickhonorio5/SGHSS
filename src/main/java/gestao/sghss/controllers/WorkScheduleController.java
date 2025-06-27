@@ -1,12 +1,17 @@
 package gestao.sghss.controllers;
 
 import gestao.sghss.controllers.dtos.requests.CreateWorkScheduleRequestDTO;
+import gestao.sghss.controllers.dtos.requests.PatchWorkScheduleRequestDTO;
+import gestao.sghss.controllers.dtos.requests.UpdateWorkScheduleRequestDTO;
 import gestao.sghss.controllers.dtos.requests.WeeklyWorkScheduleRequestDTO;
 import gestao.sghss.controllers.dtos.responses.WorkScheduleResponseDTO;
 import gestao.sghss.controllers.mappers.WorkScheduleControllerMapper;
 import gestao.sghss.usecases.WorkScheduleUseCase.CreateWorkScheduleUseCase;
 import gestao.sghss.usecases.WorkScheduleUseCase.DeleteWorkScheduleUseCase;
+import gestao.sghss.usecases.WorkScheduleUseCase.FindWorkScheduleByIdUseCase;
 import gestao.sghss.usecases.WorkScheduleUseCase.ListWorkSchedulesByProfessionalUseCase;
+import gestao.sghss.usecases.WorkScheduleUseCase.PatchWorkScheduleUseCase;
+import gestao.sghss.usecases.WorkScheduleUseCase.UpdateWorkScheduleUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,8 +22,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,6 +48,9 @@ public class WorkScheduleController {
     private final CreateWorkScheduleUseCase createWorkScheduleUseCase;
     private final ListWorkSchedulesByProfessionalUseCase listWorkSchedulesByProfessionalUseCase;
     private final DeleteWorkScheduleUseCase deleteWorkScheduleUseCase;
+    private final UpdateWorkScheduleUseCase updateWorkScheduleUseCase;
+    private final FindWorkScheduleByIdUseCase findWorkScheduleByIdUseCase;
+    private final PatchWorkScheduleUseCase patchWorkScheduleUseCase;
 
     @Qualifier("workScheduleControllerMapper")
     private final WorkScheduleControllerMapper mapper;
@@ -76,6 +86,25 @@ public class WorkScheduleController {
         var schedules = request.schedules().stream().map(mapper::toDomain).toList();
 
         return createWorkScheduleUseCase.createWeek(professionalId, schedules).stream().map(mapper::toResponse).toList();
+    }
+
+    @PutMapping("/{scheduleId}")
+    public WorkScheduleResponseDTO update(@PathVariable Long professionalId, @PathVariable Long scheduleId, @RequestBody @Valid UpdateWorkScheduleRequestDTO request) {
+        var updated = mapper.toDomainUpdate(request);
+        return mapper.toResponse(updateWorkScheduleUseCase.execute(professionalId, scheduleId, updated));
+    }
+
+    @GetMapping("/{scheduleId}")
+    @Operation(summary = "Buscar horário de trabalho específico", description = "Retorna os dados de um horário de trabalho pelo ID")
+    public WorkScheduleResponseDTO findById(@PathVariable Long professionalId, @PathVariable Long scheduleId) {
+        return mapper.toResponse(findWorkScheduleByIdUseCase.execute(professionalId, scheduleId));
+    }
+
+    @PatchMapping("/{scheduleId}")
+    @Operation(summary = "Atualizar parcialmente horário de trabalho")
+    public WorkScheduleResponseDTO patch(@PathVariable Long professionalId, @PathVariable Long scheduleId, @RequestBody PatchWorkScheduleRequestDTO request) {
+        var patch = mapper.toDomainPatch(request);
+        return mapper.toResponse(patchWorkScheduleUseCase.execute(professionalId, scheduleId, patch));
     }
 }
 

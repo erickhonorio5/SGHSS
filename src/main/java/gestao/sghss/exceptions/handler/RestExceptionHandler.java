@@ -39,6 +39,78 @@ public class RestExceptionHandler {
     }
 
     @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(WorkScheduleException.class)
+    public ExceptionFilters handleWorkScheduleException(final WorkScheduleException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(BAD_REQUEST.value())
+                .title("Erro na agenda de trabalho")
+                .build();
+    }
+
+    @ResponseStatus(NOT_FOUND)
+    @ExceptionHandler(WorkScheduleNotFoundException.class)
+    public ExceptionFilters handleWorkScheduleNotFound(WorkScheduleNotFoundException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(NOT_FOUND.value())
+                .title("Horário de trabalho não encontrado")
+                .build();
+    }
+
+    @ResponseStatus(FORBIDDEN)
+    @ExceptionHandler(WorkScheduleOwnershipException.class)
+    public ExceptionFilters handleWorkScheduleOwnership(WorkScheduleOwnershipException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(FORBIDDEN.value())
+                .title("Horário não pertence ao profissional")
+                .build();
+    }
+
+    @ResponseStatus(CONFLICT)
+    @ExceptionHandler(WorkScheduleConflictException.class)
+    public ExceptionFilters handleWorkScheduleConflict(WorkScheduleConflictException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(CONFLICT.value())
+                .title("Conflito de horário")
+                .build();
+    }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(NoChangesException.class)
+    public ExceptionFilters handleNoChangesException(NoChangesException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(BAD_REQUEST.value())
+                .title("Nenhuma modificação detectada")
+                .build();
+    }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(WorkScheduleValidationException.class)
+    public ExceptionFilters handleWorkScheduleValidationException(WorkScheduleValidationException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(BAD_REQUEST.value())
+                .title("Erro de validação na agenda de trabalho")
+                .build();
+    }
+
+    @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(BusinessException.class)
     public ExceptionFilters handleBusinessException(final BusinessException ex) {
         return ExceptionFilters.builder()
