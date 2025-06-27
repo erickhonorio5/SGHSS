@@ -87,6 +87,18 @@ public class RestExceptionHandler {
     }
 
     @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(InvalidWorkScheduleException.class)
+    public ExceptionFilters handleInvalidSchedule(InvalidWorkScheduleException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(BAD_REQUEST.value())
+                .title("Horário de trabalho inválido")
+                .build();
+    }
+
+    @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(NoChangesException.class)
     public ExceptionFilters handleNoChangesException(NoChangesException ex) {
         return ExceptionFilters.builder()
@@ -226,7 +238,7 @@ public class RestExceptionHandler {
                 .details(ex.getMessage())
                 .devMsg(ex.getClass().getName())
                 .status(BAD_REQUEST.value())
-                .title("Invalid patient status")
+                .title("Invalid patient appointmentStatus")
                 .build();
     }
 
@@ -239,6 +251,66 @@ public class RestExceptionHandler {
                 .devMsg(ex.getClass().getName())
                 .status(CONFLICT.value())
                 .title("Entity conflict")
+                .build();
+    }
+
+    @ResponseStatus(NOT_FOUND)
+    @ExceptionHandler(AppointmentNotFoundException.class)
+    public ExceptionFilters handleAppointmentNotFound(AppointmentNotFoundException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(NOT_FOUND.value())
+                .title("Consulta não encontrada!")
+                .build();
+    }
+
+    @ResponseStatus(CONFLICT)
+    @ExceptionHandler(AppointmentConflictException.class)
+    public ExceptionFilters handleAppointmentConflict(AppointmentConflictException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(CONFLICT.value())
+                .title("Conflito de agendamento!")
+                .build();
+    }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(AppointmentValidationException.class)
+    public ExceptionFilters handleAppointmentValidation(AppointmentValidationException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(BAD_REQUEST.value())
+                .title("Erro de validação na consulta!")
+                .build();
+    }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(InvalidAppointmentException.class)
+    public ExceptionFilters handleInvalidAppointmentException(InvalidAppointmentException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(BAD_REQUEST.value())
+                .title("Invalid Appointment")
+                .build();
+    }
+
+    @ResponseStatus(CONFLICT)
+    @ExceptionHandler(AppointmentSlotUnavailableException.class)
+    public ExceptionFilters handleAppointmentSlotUnavailableException(AppointmentSlotUnavailableException ex) {
+        return ExceptionFilters.builder()
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .devMsg(ex.getClass().getName())
+                .status(CONFLICT.value())
+                .title("Horário de consulta indisponível")
                 .build();
     }
 }

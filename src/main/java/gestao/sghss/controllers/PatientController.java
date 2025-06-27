@@ -78,7 +78,7 @@ public class PatientController {
 
     @GetMapping
     @ResponseStatus(OK)
-    @Operation(summary = "Listar pacientes", description = "Retorna uma lista paginada de pacientes, podendo filtrar por nome e status (ativo/inativo)")
+    @Operation(summary = "Listar pacientes", description = "Retorna uma lista paginada de pacientes, podendo filtrar por nome e appointmentStatus (ativo/inativo)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Pacientes listados com sucesso"),
             @ApiResponse(responseCode = "401", description = "Não autorizado")
