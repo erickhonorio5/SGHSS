@@ -51,6 +51,12 @@ public class WorkScheduleEntity {
     @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
+    @Column(name = "lunch_start_time")
+    private LocalTime lunchStartTime;
+
+    @Column(name = "lunch_end_time")
+    private LocalTime lunchEndTime;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

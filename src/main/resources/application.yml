@@ -1,4 +1,8 @@
 spring:
+  jackson:
+    time-zone: America/Sao_Paulo
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+
   application:
     name: SGHSS
 
