@@ -26,11 +26,8 @@ public class Patient {
     @Builder.Default
     private boolean active = true;
 
-    @Builder.Default
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Builder.Default
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public int getAge() {
         return LocalDate.now().getYear() - this.birthDate.getYear();
