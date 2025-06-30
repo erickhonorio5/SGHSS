@@ -8,6 +8,7 @@ import gestao.sghss.exceptions.AppointmentSlotUnavailableException;
 import gestao.sghss.gateways.AppointmentGateway;
 import gestao.sghss.gateways.PatientGateway;
 import gestao.sghss.gateways.ProfessionalGateway;
+import gestao.sghss.services.AvailabilityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ public class CreateAppointmentUseCase {
     private final PatientGateway patientGateway;
     private final ProfessionalGateway professionalGateway;
     private final AppointmentValidator appointmentValidator;
+    private final AvailabilityService service;
 
     public Appointment execute(Appointment appointment) {
         log.info("Iniciando criação de consulta para paciente {} e profissional {} no dia {} às {}",
@@ -35,13 +37,11 @@ public class CreateAppointmentUseCase {
         patientGateway.findById(appointment.getPatientId());
         professionalGateway.findById(appointment.getProfessionalId());
 
-        boolean isSlotTaken = appointmentGateway.existsByProfessionalIdAndAppointmentDateAndAppointmentTime(
+        service.validateAvailability(
                 appointment.getProfessionalId(),
                 appointment.getAppointmentDate(),
                 appointment.getAppointmentTime()
         );
-
-        if (isSlotTaken) throw new AppointmentSlotUnavailableException();
 
         if (appointment.getAppointmentStatus() == null) {
             appointment.setAppointmentStatus(AppointmentStatus.SCHEDULED);

@@ -37,6 +37,7 @@ public class ProfessionalEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // TODO VERIFY: 1:1
     @Column(nullable = true)
     private Long userId;
 

@@ -20,5 +20,5 @@ public interface AppointmentRepository extends JpaRepository<AppointmentEntity, 
 
     boolean existsByProfessionalIdAndAppointmentDateAndAppointmentTime(Long professionalId, LocalDate appointmentDate, LocalTime appointmentTime);
 
-    List<AppointmentEntity> findByProfessionalIdAndAppointmentDateBetween(Long professionalId, LocalDate start, LocalDate end);
+    List<AppointmentEntity> findByProfessionalIdAndAppointmentDate (Long professionalId, LocalDate appointmentDate);
 }

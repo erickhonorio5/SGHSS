@@ -6,6 +6,8 @@ import gestao.sghss.exceptions.AppointmentNotFoundException;
 import gestao.sghss.gateways.mapper.AppointmentMapper;
 import gestao.sghss.repositories.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -45,6 +47,13 @@ public class AppointmentGateway {
 
     public List<Appointment> findByDateRange(LocalDate start, LocalDate end) {
         return appointmentRepository.findByAppointmentDateBetween(start, end)
+                .stream()
+                .map(appointmentMapper::toDomain)
+                .toList();
+    }
+
+    public List<Appointment> findByProfessionalIdAndDate(Long professionalId, LocalDate appointmentDate) {
+        return appointmentRepository.findByProfessionalIdAndAppointmentDate(professionalId, appointmentDate)
                 .stream()
                 .map(appointmentMapper::toDomain)
                 .toList();
