@@ -2,7 +2,6 @@ package gestao.sghss.usecases.AppointmentUseCase;
 
 import gestao.sghss.domain.Appointment;
 import gestao.sghss.domain.validator.AppointmentValidator;
-import gestao.sghss.exceptions.AppointmentSlotUnavailableException;
 import gestao.sghss.exceptions.InvalidAppointmentException;
 import gestao.sghss.gateways.AppointmentGateway;
 import gestao.sghss.services.AvailabilityService;

@@ -4,7 +4,6 @@ import gestao.sghss.domain.Appointment;
 import gestao.sghss.domain.enums.AppointmentStatus;
 import gestao.sghss.domain.enums.AppointmentType;
 import gestao.sghss.domain.validator.AppointmentValidator;
-import gestao.sghss.exceptions.AppointmentSlotUnavailableException;
 import gestao.sghss.gateways.AppointmentGateway;
 import gestao.sghss.gateways.PatientGateway;
 import gestao.sghss.gateways.ProfessionalGateway;

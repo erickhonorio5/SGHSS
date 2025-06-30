@@ -6,8 +6,6 @@ import gestao.sghss.exceptions.AppointmentNotFoundException;
 import gestao.sghss.gateways.mapper.AppointmentMapper;
 import gestao.sghss.repositories.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
