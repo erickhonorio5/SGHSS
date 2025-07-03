@@ -51,4 +51,13 @@ public class AuthFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.equals("/api/v1/users/signup") ||
+                path.equals("/api/v1/auth/login") ||
+                path.equals("/api/v1/auth/logout") ||
+                "OPTIONS".equalsIgnoreCase(request.getMethod());
+    }
 }

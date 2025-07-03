@@ -119,7 +119,8 @@ public class TokenUtils {
                 .path(PATH)
                 .maxAge(COOKIE_MAX_AGE)
                 .secure(true)
-                .httpOnly(true);
+                .httpOnly(true)
+                .sameSite("None"); //TODO Revisar Depois para codigo em PRD
 
         if (isProdProfile()) {
             builder.domain(PROD_DOMAIN);

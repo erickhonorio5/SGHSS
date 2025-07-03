@@ -45,7 +45,18 @@ public class WebSecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth ->
-                    auth.requestMatchers(SecurityConstants.PUBLIC_PATHS).permitAll()
+                    auth.requestMatchers(
+                                    "/api/v1/users/signup",
+                                    "/api/v1/auth/login",
+                                    "/api/v1/auth/logout",
+                                    "/swagger-ui.html",
+                                    "/swagger-ui/**",
+                                    "/v3/api-docs/**",
+                                    "/swagger-resources/**",
+                                    "/webjars/**",
+                                    "/favicon.ico",
+                                    "/error"
+                            ).permitAll()
                     .requestMatchers(SecurityConstants.ADMIN_BASE + "/**").hasRole("ADMIN")
                 .anyRequest().authenticated())
             .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
@@ -74,7 +85,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowedOrigins(List.of("http://127.0.0.1:5500", "http://localhost:5500"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
@@ -82,6 +93,9 @@ public class WebSecurityConfig {
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/api/v1/users/signup", configuration);
+        source.registerCorsConfiguration("/api/v1/auth/login", configuration);
+        source.registerCorsConfiguration("/api/v1/auth/logout", configuration);
         return source;
     }
 }
