@@ -102,7 +102,7 @@ O SGHSS foi desenvolvido para atender às necessidades da rede VidaPlus, que adm
 git clone https://github.com/erickhonorio5/SGHSS.git
 cd SGHSS
 ```
-### 2. Execute com Docker Compose (Recomendado)
+### 2. Execute com Docker Compose (Necessãrio ter o Docker Desktop Instalado)
 ```bash
 docker-compose up -d
 ```
@@ -226,23 +226,6 @@ src/
 - **Gateways**: Implementação de contratos e acesso a dados
 - **Security**: Autenticação, autorização e segurança
 
-## 🧪 Testes
-
-Execute os testes com:
-
-```bash
-# Todos os testes
-./gradlew test
-
-# Apenas testes unitários
-./gradlew test --tests "*Unit*"
-
-# Apenas testes de integração
-./gradlew test --tests "*Integration*"
-
-# Com relatório de cobertura
-./gradlew test jacocoTestReport
-```
 ## 🔒 Segurança
 
 ### Medidas Implementadas
