@@ -93,7 +93,7 @@ O SGHSS foi desenvolvido para atender às necessidades da rede VidaPlus, que adm
 - Java 21 ou superior
 - Docker e Docker Compose
 - Gradle 8.0+
-- PostgreSQL 15+ (ou usar via Docker)
+- PostgreSQL 15+ (Docker compose)
 
 ## 🔧 Instalação
 
