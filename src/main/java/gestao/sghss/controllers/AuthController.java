@@ -5,6 +5,7 @@ import gestao.sghss.controllers.dtos.responses.MessageResponse;
 import gestao.sghss.security.services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
@@ -30,6 +31,11 @@ public class AuthController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody SignInRequestDTO loginRequest) {
         final var responseCookie = authService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
         return ok().header(SET_COOKIE, responseCookie.toString()).body(null);
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyToken(HttpServletRequest request) {
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/logout")

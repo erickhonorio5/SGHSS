@@ -120,7 +120,7 @@ public class TokenUtils {
                 .maxAge(COOKIE_MAX_AGE)
                 .secure(true)
                 .httpOnly(true)
-                .sameSite("None"); //TODO Revisar Depois para codigo em PRD
+                .sameSite("Lax"); //TODO Revisar Depois para codigo em PRD
 
         if (isProdProfile()) {
             builder.domain(PROD_DOMAIN);
